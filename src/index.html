@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        overflow: hidden;
+      }
+      .hidden{
+        display:none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id='start' class ='hidden'>
+      <h1>
+        Bend
+      </h1>
+      <h2>
+        Press Button To Start
+      </h2>
+    </div>
+  </body>
+
+  <script>
+    const game = require('./Game');
+    window.onload = () => { game.init(); };
+  </script>
+
+</html>
