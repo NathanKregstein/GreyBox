@@ -1,4 +1,4 @@
-# HW-5-Tank-Game-1
+# GreyBox
 
 ### Getting Started
 - Make sure [Node.js](https://nodejs.org/en/) is installed
