@@ -5,6 +5,8 @@ const Player = require('../LeftPlayer');
 const Player2 = require('../RightPlayer');
 const Ball = require('../Ball');
 
+// const SerialPortReader = require('./SerialPortReader');
+
 /**
  * Helper function for checking if two circles are colliding
  * 
@@ -25,7 +27,8 @@ class GameScreen extends Phaser.Scene {
       super('GameScreen');
     }
     create() {
-        console.log("gameScreen");
+        // this.serial = new SerialPortReader();
+        // console.log("gameScreen");
         this.ballState = false;
         this.keys = {
           left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
@@ -43,8 +46,8 @@ class GameScreen extends Phaser.Scene {
           this.player2Score =0;
           this.leftCaught =false;
           this.rightCaught =false;
-          this.score1Text = this.add.text(50, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
-          this.score2Text = this.add.text(600, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
+          this.score1Text = this.add.text(50, 50, 'p1: 0', { fontSize: '24px', fill: '#FFF' });
+          this.score2Text = this.add.text(600, 50, 'p2: 0', { fontSize: '24px', fill: '#FFF' });
           this.graphics = this.add.graphics({
               fillStyle: { color: 0xeeeeee },
               lineStyle: { width: 3, color: 0xeeeeee }

@@ -23,6 +23,7 @@ let game;
 const GameManager = {
   init: () => {
     game = new Phaser.Game(phaserConfig);
+    console.log(game);
   },
 };
 
