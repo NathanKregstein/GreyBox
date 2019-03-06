@@ -7,12 +7,14 @@ const Phaser = require('phaser');
 
 const StartScreen = require('./Scenes/StartScreen');
 const GameScreen = require('./Scenes/GameScreen');
+const EndScreen1 = require('./Scenes/EndScreen');
+const EndScreen2 = require('./Scenes/EndScreen2');
 
 const phaserConfig = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
-  scene: [StartScreen, GameScreen],
+  scene: [StartScreen, GameScreen,EndScreen1, EndScreen2],
 };
 
 let game;

@@ -132,6 +132,13 @@ class GameScreen extends Phaser.Scene {
             this.leftCaught =false;
             this.b1.free(this.b1.x,this.b1.y,this.pL1.forwardRot);
         }
+
+        if(this.player1Score >=10){
+            this.scene.start('EndScreen1');
+        }
+        if(this.player2Score >=10){
+            this.scene.start('EndScreen2');
+        }
 }
 
 
