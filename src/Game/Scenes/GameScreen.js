@@ -46,8 +46,8 @@ class GameScreen extends Phaser.Scene {
           this.player2Score =0;
           this.leftCaught =false;
           this.rightCaught =false;
-          this.score1Text = this.add.text(50, 50, 'p1: 0', { fontSize: '24px', fill: '#FFF' });
-          this.score2Text = this.add.text(600, 50, 'p2: 0', { fontSize: '24px', fill: '#FFF' });
+          this.score1Text = this.add.text(50, 50, 'Score: 0', { fontSize: '24px', fill: '#FFF' });
+          this.score2Text = this.add.text(600, 50, 'Score: 0', { fontSize: '24px', fill: '#FFF' });
           this.graphics = this.add.graphics({
               fillStyle: { color: 0xeeeeee },
               lineStyle: { width: 3, color: 0xeeeeee }
