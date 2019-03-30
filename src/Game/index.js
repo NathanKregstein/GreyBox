@@ -4,6 +4,8 @@ const Phaser = require('phaser');
 // const Player = require('./LeftPlayer');
 // const Player2 = require('./RightPlayer');
 // const Ball = require('./Ball');
+const SerialPortReader = require('./SerialPortReader');
+
 
 const StartScreen = require('./Scenes/StartScreen');
 const GameScreen = require('./Scenes/GameScreen');
@@ -14,6 +16,7 @@ const phaserConfig = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  transparent: true,
   scene: [StartScreen, GameScreen,EndScreen1, EndScreen2],
 };
 
@@ -22,6 +25,7 @@ let game;
 // Exported Module
 const GameManager = {
   init: () => {
+    SerialPortReader.openPort(p => /Arduino/.test(p.manufacturer), '-');
     game = new Phaser.Game(phaserConfig);
   },
 };

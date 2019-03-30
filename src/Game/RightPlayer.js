@@ -4,7 +4,7 @@ class RightPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 40; // radius used for collision detection
+    this.radius = 50; // radius used for collision detection
 
     // movement
     this.moveSpeed = 300;
@@ -102,17 +102,28 @@ class RightPlayer {
   draw(graphics) {
     // render player base
     graphics.save();
+    if(this.captureState == false){
+      // graphics.fillRect(0, 0, 20, 150);
+        graphics.lineStyle(2,0x000000,0.25);
+      }
+    else if(this.captureState == true){
+          // graphics.strokePoints(this.baseGeo);
+          graphics.lineStyle(2,0xffffff);
+      }
     graphics.translate(this.x, this.y);
     graphics.rotate(this.forwardRot);
+    graphics.scale(1.4,1.4);
+
     // graphics.strokePoints(this.baseGeo);
 
     // graphics.fillCircle(0, 0, 12);
-    if(this.captureState == false){
-    graphics.fillRect(0, 0, 20, 150);
-    }
-    else if(this.captureState == true){
-        graphics.strokePoints(this.baseGeo);
-    }
+    // if(this.captureState == false){
+    // graphics.fillRect(0, 0, 20, 150);
+    // }
+    // else if(this.captureState == true){
+    //     graphics.strokePoints(this.baseGeo);
+    // }
+    graphics.strokePoints(this.baseGeo);
     graphics.restore();
   }
 }

@@ -8,6 +8,7 @@ class StartScreen extends Phaser.Scene {
   create() {
     this.overlay = document.querySelector('#start-screen');
     this.overlay.classList.remove('hidden');
+    document.getElementById("game-score").style.display ='none';
 
     this.keys = {
       space: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),

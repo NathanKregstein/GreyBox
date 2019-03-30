@@ -98,18 +98,28 @@ class LeftPlayer {
   draw(graphics) {
     // render player base
     graphics.save();
+    if(this.captureState == false){
+      // graphics.fillRect(0, 0, 20, 150);
+        graphics.lineStyle(2,0x000000,0.25);
+      }
+    else if(this.captureState == true){
+          // graphics.strokePoints(this.baseGeo);
+          graphics.lineStyle(2,0xffffff);
+      }
     graphics.translate(this.x, this.y);
     graphics.rotate(this.forwardRot);
     // graphics.strokePoints(this.baseGeo);
 
     // render cannon
     // graphics.fillCircle(0, 0, 12);
-    if(this.captureState == false){
-      graphics.fillRect(0, 0, 20, 150);
-      }
-      else if(this.captureState == true){
-          graphics.strokePoints(this.baseGeo);
-      }
+    // if(this.captureState == false){
+    //   graphics.fillRect(0, 0, 20, 150);
+    //   }
+    //   else if(this.captureState == true){
+    //       graphics.strokePoints(this.baseGeo);
+    //   }
+    graphics.scale(1.4,1.4);
+    graphics.strokePoints(this.baseGeo);
     graphics.restore();
   }
 }

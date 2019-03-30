@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "electron ./src",
+    "install": "electron-rebuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "electron": "^4.0.4",
-    "phaser": "^3.16.2"
+    "electron-rebuild": "^1.8.4",
+    "phaser": "^3.16.2",
+    "serialport": "^7.1.4"
   }
 }

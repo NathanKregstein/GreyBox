@@ -5,6 +5,14 @@ const Player = require('../LeftPlayer');
 const Player2 = require('../RightPlayer');
 const Ball = require('../Ball');
 
+
+const SerialPortReader = require('../SerialPortReader');
+
+function onSerialMessage(msg) {
+  // Put your serial reading code in here. msg will be a string
+  console.log(msg);
+}
+SerialPortReader.addListener(onSerialMessage);
 /**
  * Helper function for checking if two circles are colliding
  * 
@@ -26,6 +34,8 @@ class GameScreen extends Phaser.Scene {
     }
     create() {
         console.log("gameScreen");
+        document.getElementById("game-score").style.display ='inline-block';
+        SerialPortReader.addListener(this.onSerialMessage.bind(this));
         this.ballState = false;
         this.keys = {
           left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
@@ -43,8 +53,8 @@ class GameScreen extends Phaser.Scene {
           this.player2Score =0;
           this.leftCaught =false;
           this.rightCaught =false;
-          this.score1Text = this.add.text(50, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
-          this.score2Text = this.add.text(600, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
+        //   this.score1Text = this.add.text(50, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
+        //   this.score2Text = this.add.text(600, 50, 'score: 0', { fontSize: '24px', fill: '#FFF' });
           this.graphics = this.add.graphics({
               fillStyle: { color: 0xeeeeee },
               lineStyle: { width: 3, color: 0xeeeeee }
@@ -65,7 +75,10 @@ class GameScreen extends Phaser.Scene {
 
 
     }
-
+    onSerialMessage(msg) {
+        // Put your serial reading code in here. msg will be a string
+        console.log(msg);
+      }
 
 
     update(totalTime, deltaTime) {
@@ -78,17 +91,21 @@ class GameScreen extends Phaser.Scene {
   // pR3.update(deltaTime, keys);
         this.b1.update(deltaTime, this.ballState);
 
-  // Keep player on screen
+//update score
+        document.getElementById('score1').textContent = 'Score: ' + this.player1Score;
+        document.getElementById('score2').textContent = 'Score: ' + this.player2Score;
+  
+// Keep player on screen
         if (this.b1.x > this.game.config.width + 5) {
             this.b1.hitSide();
             this.player1Score++;
-            this.score1Text.setText('Score: ' + this.player1Score);
+            // this.score1Text.setText('Score: ' + this.player1Score);
         }
 
         if (this.b1.x < -5) {
             this.b1.hitSide();
             this.player2Score++;
-            this.score2Text.setText('Score: ' + this.player2Score);
+            // this.score2Text.setText('Score: ' + this.player2Score);
         }
 
         if (this.b1.y > this.game.config.height + 5) {
@@ -134,9 +151,11 @@ class GameScreen extends Phaser.Scene {
         }
 
         if(this.player1Score >=10){
+            document.getElementById("game-score").style.display ='none';
             this.scene.start('EndScreen1');
         }
         if(this.player2Score >=10){
+            document.getElementById("game-score").style.display ='none';
             this.scene.start('EndScreen2');
         }
 }

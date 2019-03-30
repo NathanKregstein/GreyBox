@@ -60,6 +60,7 @@ class Ball {
       }
       draw(graphics) {
           graphics.save();
+          graphics.fillStyle(0x000000,1);
           graphics.translate(this.x, this.y);
           graphics.fillCircle(0, 0, this.radius);
           graphics.restore();
