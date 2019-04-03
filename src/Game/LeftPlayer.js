@@ -4,15 +4,15 @@ class LeftPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 40; // radius used for collision detection
+    this.radius = 50; // radius used for collision detection
 
     // movement
     this.moveSpeed = 300;
     this.forwardRot = 0;
     this.rotSpeed = 1;
     this.captureState = false;
-    this.holdTime =5000;
-    this.resetTime =2000;
+    this.holdTime =10000;
+    this.resetTime =1000;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
@@ -48,15 +48,16 @@ class LeftPlayer {
     this.y = newY;
   }
 
-  update(deltaTime, keys) {
+  update(deltaTime, keys, player1Bend , player1Pos, player1Rot) {
     // Player Movement
     if(this.captureState ==true){
-      if (keys.a.isDown) {
-      this.forwardRot -= this.rotSpeed * deltaTime / 1000
-      }
-      else if (keys.d.isDown) {
-      this.forwardRot += this.rotSpeed * deltaTime / 1000
-      }
+      // if (keys.a.isDown) {
+      // this.forwardRot -= this.rotSpeed * deltaTime / 1000
+      // }
+      // else if (keys.d.isDown) {
+      // this.forwardRot += this.rotSpeed * deltaTime / 1000
+      // }
+      this.forwardRot = player1Rot;
   }
   else{
       this.forwardRot =0;
@@ -66,13 +67,14 @@ class LeftPlayer {
     const forwardX = -Math.sin(this.forwardRot);
     const forwardY = Math.cos(this.forwardRot);
     
-    if (keys.w.isDown) {
-      this.y -= this.moveSpeed * forwardY * deltaTime / 1000;
-    }
-    if (keys.s.isDown) {
-      this.y += this.moveSpeed * forwardY * deltaTime / 1000;
-    }
-    if(keys.space.isDown  && this.holdResetTimer == this.resetTime){
+    this.y = player1Pos;
+    // if (keys.w.isDown) {
+    //   this.y -= this.moveSpeed * forwardY * deltaTime / 1000;
+    // }
+    // if (keys.s.isDown) {
+    //   this.y += this.moveSpeed * forwardY * deltaTime / 1000;
+    // }
+    if(player1Bend == 1  && this.holdResetTimer == this.resetTime){
       this.captureState=true;
       this.captureHoldTimer = this.captureHoldTimer - deltaTime;
       this.SpaceDown =true;

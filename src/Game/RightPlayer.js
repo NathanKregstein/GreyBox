@@ -11,8 +11,8 @@ class RightPlayer {
     this.forwardRot = 0;
     this.rotSpeed = 1;
     this.captureState = false;
-    this.holdTime =5000;
-    this.resetTime =2000;
+    this.holdTime =10000;
+    this.resetTime =1000;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
@@ -49,15 +49,16 @@ class RightPlayer {
     this.y = newY;
   }
 
-  update(deltaTime, keys) {
+  update(deltaTime, keys, player2Bend, player2Pos, player2Rot) {
     // Player Movement
     if(this.captureState ==true){
-        if (keys.left.isDown) {
-        this.forwardRot -= this.rotSpeed * deltaTime / 1000
-        }
-        else if (keys.right.isDown) {
-        this.forwardRot += this.rotSpeed * deltaTime / 1000
-        }
+        // if (keys.left.isDown) {
+        // this.forwardRot -= this.rotSpeed * deltaTime / 1000
+        // }
+        // else if (keys.right.isDown) {
+        // this.forwardRot += this.rotSpeed * deltaTime / 1000
+        // }
+        this.forwardRot = player2Rot;
     }
     else{
         this.forwardRot =0;
@@ -67,13 +68,16 @@ class RightPlayer {
     const forwardX = -Math.sin(this.forwardRot);
     const forwardY = Math.cos(this.forwardRot);
     
-    if (keys.up.isDown) {
-      this.y -= this.moveSpeed * forwardY * deltaTime / 1000;
-    }
-    if (keys.down.isDown) {
-        this.y += this.moveSpeed * forwardY * deltaTime / 1000;
-      }
-    if(keys.space.isDown  && this.holdResetTimer == this.resetTime){
+    // if (keys.up.isDown) {
+    //   this.y -= this.moveSpeed * forwardY * deltaTime / 1000;
+    // }
+    // if (keys.down.isDown) {
+    //     this.y += this.moveSpeed * forwardY * deltaTime / 1000;
+    //   }
+
+    this.y = player2Pos;
+
+    if(player2Bend == 1  && this.holdResetTimer == this.resetTime){
             this.captureState=true;
             this.captureHoldTimer = this.captureHoldTimer - deltaTime;
             this.SpaceDown =true;
@@ -108,7 +112,7 @@ class RightPlayer {
       }
     else if(this.captureState == true){
           // graphics.strokePoints(this.baseGeo);
-          graphics.lineStyle(2,0xffffff);
+          graphics.lineStyle(2,0xffffff,1);
       }
     graphics.translate(this.x, this.y);
     graphics.rotate(this.forwardRot);
@@ -124,6 +128,8 @@ class RightPlayer {
     //     graphics.strokePoints(this.baseGeo);
     // }
     graphics.strokePoints(this.baseGeo);
+
+
     graphics.restore();
   }
 }

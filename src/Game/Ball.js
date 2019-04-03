@@ -40,6 +40,10 @@ class Ball {
     caught(x,y) {
         this.x=x;
         this.y=y;
+        console.log("ball x value =")
+        console.log(this.x);
+        console.log("ball y value =")
+        console.log(this.y);
         this.isCaught = true;
       }
 

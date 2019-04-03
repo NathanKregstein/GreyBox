@@ -25,7 +25,7 @@ let game;
 // Exported Module
 const GameManager = {
   init: () => {
-    SerialPortReader.openPort(p => /Arduino/.test(p.manufacturer), '-');
+    SerialPortReader.openPort(p => /Arduino/.test(p.manufacturer), '~');
     game = new Phaser.Game(phaserConfig);
   },
 };

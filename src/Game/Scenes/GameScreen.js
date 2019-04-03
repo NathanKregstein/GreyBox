@@ -8,9 +8,25 @@ const Ball = require('../Ball');
 
 const SerialPortReader = require('../SerialPortReader');
 
+let player1Pos;
+let player2Pos;
+let player1Bend = 0;
+let player2Bend = 0;
+let player1Rot = 0;
+let player2Rot = 0;
 function onSerialMessage(msg) {
   // Put your serial reading code in here. msg will be a string
-  console.log(msg);
+//   console.log(msg);
+  const vals = msg.split(':');
+    player1Pos = parseFloat(vals[0]);
+    player2Pos = parseFloat(vals[1]);
+    player1Bend = parseInt(vals[2]);
+    player2Bend = parseInt(vals[3]);
+    player1Rot = -parseFloat(vals[4]);
+    player2Rot = parseFloat(vals[5]);
+
+//   console.log(player1Pos);
+
 }
 SerialPortReader.addListener(onSerialMessage);
 /**
@@ -36,6 +52,7 @@ class GameScreen extends Phaser.Scene {
         console.log("gameScreen");
         document.getElementById("game-score").style.display ='inline-block';
         SerialPortReader.addListener(this.onSerialMessage.bind(this));
+        console.log(player1Bend);
         this.ballState = false;
         this.keys = {
           left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
@@ -69,7 +86,7 @@ class GameScreen extends Phaser.Scene {
         this.pR1 = new Player2((this.game.config.width* .75) + 100, this.game.config.height / 2 -75);
 // const pR2 = new Player2((phaserConfig.width * .75 +100), phaserConfig.height / 3 -125);
 // const pR3 = new Player2((phaserConfig.width * .75 +100), phaserConfig.height * (2/3) -25);
-        this.b1 = new Ball(this.game.config.width / 2, this.game.config.height / 2, 10, Math.random()* (300+200) -200);
+        this.b1 = new Ball(this.game.config.width / 2, this.game.config.height / 2, 11, Math.random()* (300+200) -200);
 
 
 
@@ -83,13 +100,14 @@ class GameScreen extends Phaser.Scene {
 
     update(totalTime, deltaTime) {
   // Update Player
-        this.pL1.update(deltaTime, this.keys);
+        this.b1.update(deltaTime, this.ballState);
+
+        this.pL1.update(deltaTime, this.keys, player1Bend, player1Pos, player1Rot);
   // pL2.update(deltaTime, keys);
   // pL3.update(deltaTime, keys);
-        this.pR1.update(deltaTime, this.keys);
+        this.pR1.update(deltaTime, this.keys, player2Bend, player2Pos, player2Rot);
   // pR2.update(deltaTime, keys);
   // pR3.update(deltaTime, keys);
-        this.b1.update(deltaTime, this.ballState);
 
 //update score
         document.getElementById('score1').textContent = 'Score: ' + this.player1Score;
@@ -158,6 +176,7 @@ class GameScreen extends Phaser.Scene {
             document.getElementById("game-score").style.display ='none';
             this.scene.start('EndScreen2');
         }
+        
 }
 
 
