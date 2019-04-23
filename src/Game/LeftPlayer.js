@@ -4,15 +4,15 @@ class LeftPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 50; // radius used for collision detection
+    this.radius = 55; // radius used for collision detection
 
     // movement
-    this.moveSpeed = 300;
+    this.moveSpeed = 500;
     this.forwardRot = 0;
     this.rotSpeed = 1;
     this.captureState = false;
-    this.holdTime =10000;
-    this.resetTime =1000;
+    this.holdTime =5000;
+    this.resetTime =2000;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
@@ -61,13 +61,14 @@ class LeftPlayer {
   }
   else{
       this.forwardRot =0;
+      this.y = player1Pos;
   }
 
     // Calculate forward vector
     const forwardX = -Math.sin(this.forwardRot);
     const forwardY = Math.cos(this.forwardRot);
     
-    this.y = player1Pos;
+    
     // if (keys.w.isDown) {
     //   this.y -= this.moveSpeed * forwardY * deltaTime / 1000;
     // }
@@ -102,11 +103,11 @@ class LeftPlayer {
     graphics.save();
     if(this.captureState == false){
       // graphics.fillRect(0, 0, 20, 150);
-        graphics.lineStyle(2,0x000000,0.25);
+        graphics.lineStyle(2,0xA799B7);
       }
     else if(this.captureState == true){
           // graphics.strokePoints(this.baseGeo);
-          graphics.lineStyle(2,0xffffff);
+          graphics.lineStyle(3,0xE0CA3C);
       }
     graphics.translate(this.x, this.y);
     graphics.rotate(this.forwardRot);

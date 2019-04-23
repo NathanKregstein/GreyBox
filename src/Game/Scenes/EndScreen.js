@@ -4,7 +4,9 @@ class EndScreen1 extends Phaser.Scene {
   constructor() {
     super('EndScreen1');
   }
-
+  preload(){
+    this.load.audio('WinSound',['../Assets/WinSound2.wav']);
+}
   create() {
     this.overlay = document.querySelector('#end-screen1');
     this.overlay.classList.remove('hidden');
@@ -12,6 +14,7 @@ class EndScreen1 extends Phaser.Scene {
     this.keys = {
       space: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     };
+    this.sound.play('WinSound', { volume: 1 });
   }
 
   update() {

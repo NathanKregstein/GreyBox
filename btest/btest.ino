@@ -24,8 +24,10 @@ int sensor2YValue =0;
 
 void setup() {
   // put your setup code here, to run once:
-Serial.begin(9600);
- delay(500);
+  Serial.begin(9600);
+  delay(100);
+  SensorOne.begin();
+  SensorTwo.begin();
 }
 
 void loop() {
@@ -33,19 +35,20 @@ void loop() {
 //  int bend1 =analogRead(bendPin);
   int pos1read = analogRead(Pot1Pin);
   int pos2read = analogRead(Pot2Pin);
+//  Serial.println(SensorOne.readFloatAccelZ(), 4);
 
   
 //  Serial.println(pos1read);
   
-  int pos1 = map(pos1read,0,662,520,60);
-  int pos2 = map(pos2read,0,662,520,60);
-  if(SensorOne.readFloatAccelZ()< 0.9){
+  int pos1 = map(pos1read,0,1023,60,520);
+  int pos2 = map(pos2read,0,1023,60,520);
+  if(SensorOne.readFloatAccelZ()< 0.8){
     bend1 = 1;
   }
   else{
     bend1 = 0;
   }
-  if(SensorTwo.readFloatAccelZ()< 0.9){
+  if(SensorTwo.readFloatAccelZ()< 0.8){
     bend2 = 1;
   }
   else{
@@ -68,4 +71,5 @@ void loop() {
   Serial.print(rot2);
   Serial.println("~");
   delay(100);
+
 }
