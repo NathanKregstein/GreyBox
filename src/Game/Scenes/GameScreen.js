@@ -16,23 +16,23 @@ let player1Bend = 0;
 let player2Bend = 0;
 let player1Rot = 0;
 let player2Rot = 0;
-function onSerialMessage(msg) {
-  // Put your serial reading code in here. msg will be a string
-//   console.log(msg);
-  const vals = msg.split(':');
-    player1Pos = parseFloat(vals[0]);
-    player2Pos = parseFloat(vals[1]);
-    player1Bend = parseInt(vals[2]);
-    player2Bend = parseInt(vals[3]);
-    player1Rot = parseFloat(vals[4]);
-    player2Rot = parseFloat(vals[5]);
-    player1Pos = player1Pos/1023 * (window.innerHeight * .8) + (window.innerHeight *.1);
-    player2Pos = player2Pos/1023 * (window.innerHeight *.8) + (window.innerHeight *.1);
+// function onSerialMessage(msg) {
+//   // Put your serial reading code in here. msg will be a string
+// //   console.log(msg);
+//     const vals = msg.split(':');
+//     player1Pos = parseFloat(vals[0]);
+//     player2Pos = parseFloat(vals[1]);
+//     player1Bend = parseInt(vals[2]);
+//     player2Bend = parseInt(vals[3]);
+//     player1Rot = parseFloat(vals[4]);
+//     player2Rot = parseFloat(vals[5]);
+//     player1Pos = player1Pos/1023 * (window.innerHeight * .8) + (window.innerHeight *.1);
+//     player2Pos = player2Pos/1023 * (window.innerHeight *.8) + (window.innerHeight *.1);
 
-//   console.log(player1Pos);
+// //   console.log(player1Pos);
 
-}
-SerialPortReader.addListener(onSerialMessage);
+// }
+// SerialPortReader.addListener(onSerialMessage);
 /**
  * Helper function for checking if two circles are colliding
  * 
@@ -66,6 +66,8 @@ function isCircleCollision(c1, c2) {
 class GameScreen extends Phaser.Scene {
     constructor() {
       super('GameScreen');
+      SerialPortReader.addListener(this.onSerialMessage.bind(this));
+      
     }
 
     preload(){
@@ -78,7 +80,9 @@ class GameScreen extends Phaser.Scene {
 
       // Theme song from https://freesound.org/people/tyops/sounds/237127/
   }
-
+    onSerialMessage(msg){
+      this.gamevars = msg
+    }
     create() {
         // console.log("gameScreen");
         document.getElementById("game-score").style.display ='inline-block';
@@ -134,10 +138,10 @@ class GameScreen extends Phaser.Scene {
         this.shakeSpeed = 0;
 
     }
-    onSerialMessage(msg) {
-        // Put your serial reading code in here. msg will be a string
-        console.log(msg);
-      }
+    // onSerialMessage(msg) {
+    //     // Put your serial reading code in here. msg will be a string
+    //     console.log(msg);
+    //   }
 
       startScreenShake(intensity, duration, speed) {
         this.isShaking = true;
@@ -169,6 +173,17 @@ class GameScreen extends Phaser.Scene {
       }
 
     update(totalTime, deltaTime) {
+      if(this.gamevars){
+        const vals = this.gamevars.split(':');
+        player1Pos = parseFloat(vals[0]);
+        player2Pos = parseFloat(vals[1]);
+        player1Bend = parseInt(vals[2]);
+        player2Bend = parseInt(vals[3]);
+        player1Rot = parseFloat(vals[4]);
+        player2Rot = parseFloat(vals[5]);
+        player1Pos = player1Pos/1023 * (window.innerHeight * .8) + (window.innerHeight *.1);
+        player2Pos = player2Pos/1023 * (window.innerHeight *.8) + (window.innerHeight *.1);
+      }
   // Update Player
         this.updateScreenShake(deltaTime);
         this.b1.update(deltaTime, this.ballState);

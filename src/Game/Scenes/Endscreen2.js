@@ -19,6 +19,8 @@ class EndScreen2 extends Phaser.Scene {
 
   update() {
     if (this.keys.space.isDown) {
+      document.getElementById("Player1ready").innerHTML= "Player 1 Bend to Ready Up";
+      document.getElementById("Player2ready").innerHTML= "Player 2 Bend to Ready Up";
       this.overlay.classList.add('hidden');
       // Transition to gameplay
       this.scene.start('GameScreen');
