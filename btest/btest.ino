@@ -41,8 +41,8 @@ void loop() {
   
 //  Serial.println(pos1read);
   
-  int pos1 = map(pos1read,0,1023,60,520);
-  int pos2 = map(pos2read,0,1023,60,520);
+  int pos1 = pos1read;
+  int pos2 = pos2read;
   if(SensorOne.readFloatAccelZ()< 0.8){
     bend1 = 1;
   }
@@ -56,8 +56,8 @@ void loop() {
     bend2 = 0;
   }
 
-  rot1 = atan2(SensorOne.readFloatAccelY(), SensorOne.readFloatAccelX());
-  rot2 = atan2(SensorTwo.readFloatAccelY(), SensorTwo.readFloatAccelX());
+  rot1 = atan2(SensorOne.readFloatAccelY(), SensorOne.readFloatAccelX()) *-1 + HALF_PI;
+  rot2 = atan2(SensorTwo.readFloatAccelY(), SensorTwo.readFloatAccelX()) *-1 + HALF_PI;
 //Serial.println(SensorOne.readFloatAccelY());
   Serial.print(pos1);
   Serial.print(":");

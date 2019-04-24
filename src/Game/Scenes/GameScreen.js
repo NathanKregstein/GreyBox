@@ -26,8 +26,8 @@ function onSerialMessage(msg) {
     player2Bend = parseInt(vals[3]);
     player1Rot = parseFloat(vals[4]);
     player2Rot = parseFloat(vals[5]);
-    player1Pos = player1Pos/1023 * (window.innerHeight -60);
-    player2Pos = player2Pos/1023 * (window.innerHeight -60);
+    player1Pos = player1Pos/1023 * (window.innerHeight * .8) + (window.innerHeight *.1);
+    player2Pos = player2Pos/1023 * (window.innerHeight *.8) + (window.innerHeight *.1);
 
 //   console.log(player1Pos);
 
