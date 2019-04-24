@@ -17,6 +17,7 @@ class LeftPlayer {
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
     this.prevCaptureState =false;
+    this.temp = 0;
 
 
     // Geometry used for rendering
@@ -67,7 +68,20 @@ class LeftPlayer {
       // else if (keys.d.isDown) {
       // this.forwardRot += this.rotSpeed * deltaTime / 1000
       // }
-      this.forwardRot = player1Rot;
+      
+      // console.log(player1Rot);
+      // if(player1Rot < Math.PI){
+        this.temp = player1Rot + (2*(Math.PI));
+         if(this.temp <= 1.5  || this.temp >= 5){
+           this.forwardRot = this.temp
+         }
+        //   this.forwardRot +=(Math.PI/4);
+        // }
+        // else{
+        //   this.forwardRot -= (Math.PI/4);
+        // }
+        // console.log(this.forwardRot);
+      // }
   }
   else{
       this.forwardRot =0;

@@ -4,7 +4,7 @@ class Blocker1 {
     constructor(x, y, r, w ,h, f) {
        
       this.x = x;
-      this.half =x;
+      this.half = x;
       this.y = y;
       this.radius = r;
       this.forward = f;

@@ -83,6 +83,17 @@
         top: 0;
         left: 0;
       }
+      .line-in-middle {
+        width:100vw;
+        height:100vw;
+	      background: linear-gradient(to right, 
+	                              transparent 0%, 
+	                              transparent calc(50% - 0.81px), 
+	                              black calc(50% - 0.8px), 
+	                              black calc(50% + 0.8px), 
+	                              transparent calc(50% + 0.81px), 
+	                              transparent 100%); 
+	    }
     </style>
 
   </head>
@@ -123,6 +134,7 @@
       </h2>
     </div>
     <div id ='game-score'>
+        <div class="line-in-middle"></div>
       <h3 id ='score1'>
         Score: 
       </h3>

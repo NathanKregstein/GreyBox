@@ -3,8 +3,8 @@ const Phaser = require('phaser');
 class Blocker2 {
     constructor(x, y, r, w ,h, f) {
        
-      this.x = x;
-      this.half =x;
+      this.x = x - w;
+      this.half = x - w;
       this.y = y;
       this.radius = r;
       this.forward = f;

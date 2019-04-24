@@ -120,8 +120,8 @@ class GameScreen extends Phaser.Scene {
         this.pL1 = new Player(((window.innerWidth / 4) -(.1 *window.innerWidth)), window.innerHeight / 2 -75);
         this.pR1 = new Player2((window.innerWidth * .75) + (.1 *window.innerWidth), window.innerHeight / 2 -75);
         this.b1 = new Ball(window.innerWidth  / 2, window.innerHeight / 2, .011* window.innerWidth, Math.random()* (300+200) -200);
-        this.blocker1 = new Blocker1(window.innerWidth /2 - (.1 *window.innerWidth) , window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
-        this.blocker2 = new Blocker2(window.innerWidth /2 + (.1 *window.innerWidth), window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
+        this.blocker1 = new Blocker1((window.innerWidth / 2) - (.1 *window.innerWidth) , window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
+        this.blocker2 = new Blocker2((window.innerWidth / 2) + (.1 *window.innerWidth), window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
 
         //old speed generator Math.random() *(20+10) -10
         //variable for soundplay
@@ -186,14 +186,11 @@ class GameScreen extends Phaser.Scene {
       }
   // Update Player
         this.updateScreenShake(deltaTime);
-        this.b1.update(deltaTime, this.ballState);
 
         this.pL1.update(deltaTime, this.keys, player1Bend, player1Pos, player1Rot);
-  // pL2.update(deltaTime, keys);
-  // pL3.update(deltaTime, keys);
+
         this.pR1.update(deltaTime, this.keys, player2Bend, player2Pos, player2Rot);
-  // pR2.update(deltaTime, keys);
-  // pR3.update(deltaTime, keys);
+        this.b1.update(deltaTime, this.ballState, this.pL1.y,this.pR1.y);
   this.blocker1.update(deltaTime,this.player1Score,this.player2Score);
   this.blocker2.update(deltaTime,this.player1Score,this.player2Score);
 //update score
@@ -224,13 +221,13 @@ class GameScreen extends Phaser.Scene {
         if (this.b1.y > this.game.config.height + 5) {
             this.b1.hitTopyBot();
             this.sound.play('BlockerHitSound');
-            this.startScreenShake(3, 750, 75);
+            this.startScreenShake(2, 750, 75);
         }
 
         if (this.b1.y < 0) {
             this.b1.hitTopyBot();
             this.sound.play('BlockerHitSound');
-            this.startScreenShake(3, 750, 75);
+            this.startScreenShake(2, 750, 75);
         }
 
         if(this.blocker1.y<0){
@@ -283,7 +280,7 @@ class GameScreen extends Phaser.Scene {
               }
               this.blocker1.blockerIncreaseSpeed();
               this.sound.play('BlockerHitSound', { name: 'markername',start:0,duration: 0.1 });
-              this.startScreenShake(2, 500, 75);
+              this.startScreenShake(1, 500, 75);
               this.b1.colorChange =true;
           }
           // console.log("yeah collide");
@@ -317,7 +314,7 @@ class GameScreen extends Phaser.Scene {
               }
               this.sound.play('BlockerHitSound', { name: 'markername',start:0,duration: 0.1 });
               this.blocker2.blockerIncreaseSpeed();
-              this.startScreenShake(2, 500, 75);
+              this.startScreenShake(1, 500, 75);
               this.b1.colorChange =true;
           }
           // console.log("yeah collide");
@@ -330,7 +327,7 @@ class GameScreen extends Phaser.Scene {
 
         if(isCircleCollision(this.b1,this.pR1) && this.pR1.giveState()){
     // console.log("collide");
-            this.b1.caught(this.pR1.x,this.pR1.y);
+            this.b1.caughtR(this.pR1.x,this.pR1.y);
             this.ballState = true;
             this.rightCaught = true;
             if(this.rightSoundPlayed==false){
@@ -346,7 +343,7 @@ class GameScreen extends Phaser.Scene {
         }
         if(isCircleCollision(this.b1,this.pL1) && this.pL1.giveState()){
     // console.log("collide");
-            this.b1.caught(this.pL1.x,this.pL1.y);
+            this.b1.caughtL(this.pL1.x,this.pL1.y);
             this.ballState = true;
             this.leftCaught = true;
             if(this.leftSoundPlayed==false){

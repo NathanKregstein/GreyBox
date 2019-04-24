@@ -68,7 +68,12 @@ class RightPlayer {
         // else if (keys.right.isDown) {
         // this.forwardRot += this.rotSpeed * deltaTime / 1000
         // }
-        this.forwardRot = player2Rot +Math.PI;
+        console.log(player2Rot);
+        // if(player2Rot > Math.PI){
+          if(player2Rot <= 4.5 && player2Rot >= 1.5){
+            this.forwardRot = player2Rot +Math.PI;
+          }
+        // }
     }
     else{
         this.forwardRot =0;

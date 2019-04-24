@@ -3,11 +3,20 @@ class Ball {
       this.x = x;
       this.y = y;
       this.radius = r;
-      this.forward = f;
+      // this.forward = f;
+      this.forward = Math.random();
+        this.forward *= Math.PI;
+        if(this.forward >= (Math.PI/2)){
+          this.forward += (Math.PI/4);
+        }
+        else{
+          this.forward -= (Math.PI/4);
+        }
       this.forwardX = Math.cos(this.forward);
       this.forwardY = Math.sin(this.forward);
       this.moveSpeed = .300 * window.innerWidth;
-      this.isCaught = false;
+      this.isCaughtL = false;
+      this.isCaughtR = false;
       this.hitTop  =false;
       this.capSpeed = .8 * window.innerWidth;
 
@@ -21,7 +30,8 @@ class Ball {
         this.x = x;
         this.y = y;
         this.forward = forward;
-        this.isCaught = false;
+        this.isCaughtL = false;
+        this.isCaughtR = false;
         this.forwardX = Math.cos(this.forward);
         this.forwardY = Math.sin(this.forward);
          console.log(this.forward)
@@ -54,14 +64,23 @@ class Ball {
         this.forwardY = Math.sin(this.forward);
         this.moveSpeed =.300 * window.innerWidth;
     }
-    caught(x,y) {
+    caughtL(x,y) {
         this.x=x;
         this.y=y;
         console.log("ball x value =")
         console.log(this.x);
         console.log("ball y value =")
         console.log(this.y);
-        this.isCaught = true;
+        this.isCaughtL = true;
+      }
+      caughtR(x,y) {
+        this.x=x;
+        this.y=y;
+        console.log("ball x value =")
+        console.log(this.x);
+        console.log("ball y value =")
+        console.log(this.y);
+        this.isCaughtR = true;
       }
 
       updateChangeColor(deltaTime){
@@ -80,14 +99,21 @@ class Ball {
         // console.log(this.currentColor);
       }
 
-      update(deltaTime, state) {
+      update(deltaTime, state, Ly, Ry) {
         //   console.log(this.forwardY);
         this.updateChangeColor(deltaTime);
-        if (this.isCaught){
+        if (this.isCaughtL){
              this.forwardX =0;
              this.forwardY =0;
             //  console.log("caught");
+            this.y = Ly;
         }
+        if (this.isCaughtR){
+          this.forwardX =0;
+          this.forwardY =0;
+          this.y = Ry;
+         //  console.log("caught");
+     }
           // Calculate forward vector
         //   else{
         //          this.forwardX = Math.cos(this.forward);
@@ -95,6 +121,7 @@ class Ball {
         //   }
           this.x += this.moveSpeed * this.forwardX * deltaTime / 1000;
           this.y += this.moveSpeed * this.forwardY * deltaTime / 1000;
+          
       }
       draw(graphics) {
           graphics.save();
