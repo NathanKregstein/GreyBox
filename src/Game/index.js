@@ -14,8 +14,8 @@ const EndScreen2 = require('./Scenes/EndScreen2');
 
 const phaserConfig = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
   transparent: true,
   scene: [StartScreen, GameScreen,EndScreen1, EndScreen2],
 };
@@ -28,6 +28,11 @@ const GameManager = {
     SerialPortReader.openPort(p => /Arduino/.test(p.manufacturer), '~');
     game = new Phaser.Game(phaserConfig);
     game.canvas.classList.add('shake-enabled');
+    window.addEventListener("resize",()=>{
+      game.canvas.width = window.innerWidth;
+      game.canvas.height = window.innerHeight;
+    }
+    );
   },
 };
 

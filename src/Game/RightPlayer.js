@@ -4,15 +4,15 @@ class RightPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 55; // radius used for collision detection
+    this.radius = .055*window.innerWidth; // radius used for collision detection
 
     // movement
     this.moveSpeed = 500;
     this.forwardRot = 0;
     this.rotSpeed = 1;
     this.captureState = false;
-    this.holdTime =15000;
-    this.resetTime =1000;
+    this.holdTime =5000;
+    this.resetTime =2000;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
@@ -36,6 +36,16 @@ class RightPlayer {
     new Phaser.Geom.Point(-30,-40),
     new Phaser.Geom.Point(0,0),
     ];
+    this.newGeo =[
+      new Phaser.Geom.Point(10,0),
+      new Phaser.Geom.Point(-25,0),
+      new Phaser.Geom.Point(-20,-10),
+      new Phaser.Geom.Point(-25,0),
+      new Phaser.Geom.Point(-20,10),
+      // new Phaser.Geom.Point(window.innerWidth *.03,window.innerHeight *.03),
+      // new Phaser.Geom.Point(0,window.innerHeight*.06),
+      // new Phaser.Geom.Point(-10,0),
+    ];
   }
 
   giveState(){
@@ -58,12 +68,13 @@ class RightPlayer {
         // else if (keys.right.isDown) {
         // this.forwardRot += this.rotSpeed * deltaTime / 1000
         // }
-        this.forwardRot = player2Rot;
+        this.forwardRot = player2Rot +Math.PI;
     }
     else{
         this.forwardRot =0;
-        this.y = player2Pos;
+        // this.y = player2Pos;
     }
+    this.y = player2Pos;
 
     // Calculate forward vector
     const forwardX = -Math.sin(this.forwardRot);
@@ -105,33 +116,51 @@ class RightPlayer {
   }
 
   draw(graphics) {
-    // render player base
     graphics.save();
+    graphics.translate(this.x, this.y);
+    graphics.rotate(this.forwardRot);
     if(this.captureState == false){
       // graphics.fillRect(0, 0, 20, 150);
+        // graphics.lineStyle(2,0xA799B7);
+        graphics.fillStyle(0xA799B7, 1);
+        graphics.fillCircle(0, 0, this.radius);
+        graphics.fillStyle(0x40E0D0, 1);
+        graphics.fillCircle(-70, 0, this.radius);
+        graphics.fillStyle(0xA799B7, 1);
+        // graphics.fillRect(-5, 0 - this.radius, 5, this.radius +this.radius);
         graphics.lineStyle(2,0xA799B7);
       }
     else if(this.captureState == true){
           // graphics.strokePoints(this.baseGeo);
-          graphics.lineStyle(3,0xE0CA3C);
+          // graphics.lineStyle(3,0xE0CA3C);
+          graphics.fillStyle(0xE0CA3C, 1);
+          graphics.fillCircle(0, 0, this.radius);
+          graphics.fillStyle(0x40E0D0, 1);
+          graphics.fillCircle(-20, 0, this.radius);
+          // graphics.fillStyle(0xE0CA3C, 1);
+          graphics.lineStyle(5,0xE0CA3C);
+          // graphics.fillRect(-5, 0 - this.radius, 5, this.radius +this.radius);
+          graphics.strokePoints(this.newGeo);
       }
-    graphics.translate(this.x, this.y);
-    graphics.rotate(this.forwardRot);
-    graphics.scale(1.4,1.4);
+      graphics.restore();
+    // render player base
+    // graphics.save();
+    // if(this.captureState == false){
+    //   // graphics.fillRect(0, 0, 20, 150);
+    //     graphics.lineStyle(2,0xA799B7);
+    //   }
+    // else if(this.captureState == true){
+    //       // graphics.strokePoints(this.baseGeo);
+    //       graphics.lineStyle(3,0xE0CA3C);
+    //   }
+    // graphics.translate(this.x, this.y);
+    // graphics.rotate(this.forwardRot);
+    // graphics.scale(1.4,1.4);
 
     // graphics.strokePoints(this.baseGeo);
 
-    // graphics.fillCircle(0, 0, 12);
-    // if(this.captureState == false){
-    // graphics.fillRect(0, 0, 20, 150);
-    // }
-    // else if(this.captureState == true){
-    //     graphics.strokePoints(this.baseGeo);
-    // }
-    graphics.strokePoints(this.baseGeo);
 
-
-    graphics.restore();
+    // graphics.restore();
   }
 }
 

@@ -4,8 +4,8 @@ class LeftPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 55; // radius used for collision detection
-
+    // this.radius = 55; // radius used for collision detection
+    this.radius = .055*window.innerWidth; 
     // movement
     this.moveSpeed = 500;
     this.forwardRot = 0;
@@ -36,6 +36,16 @@ class LeftPlayer {
       new Phaser.Geom.Point(30,-40),
       new Phaser.Geom.Point(0,0),
     ];
+    this.newGeo =[
+      new Phaser.Geom.Point(-10,0),
+      new Phaser.Geom.Point(25,0),
+      new Phaser.Geom.Point(20,-10),
+      new Phaser.Geom.Point(25,0),
+      new Phaser.Geom.Point(20,10),
+      // new Phaser.Geom.Point(window.innerWidth *.03,window.innerHeight *.03),
+      // new Phaser.Geom.Point(0,window.innerHeight*.06),
+      // new Phaser.Geom.Point(-10,0),
+    ];
   }
   giveState(){
     return this.captureState;
@@ -50,7 +60,7 @@ class LeftPlayer {
 
   update(deltaTime, keys, player1Bend , player1Pos, player1Rot) {
     // Player Movement
-    if(this.captureState ==true){
+    if(this.captureState == true){
       // if (keys.a.isDown) {
       // this.forwardRot -= this.rotSpeed * deltaTime / 1000
       // }
@@ -61,8 +71,9 @@ class LeftPlayer {
   }
   else{
       this.forwardRot =0;
-      this.y = player1Pos;
+      // this.y = player1Pos;
   }
+  this.y = player1Pos;
 
     // Calculate forward vector
     const forwardX = -Math.sin(this.forwardRot);
@@ -99,30 +110,43 @@ class LeftPlayer {
   }
 
   draw(graphics) {
-    // render player base
     graphics.save();
-    if(this.captureState == false){
-      // graphics.fillRect(0, 0, 20, 150);
-        graphics.lineStyle(2,0xA799B7);
-      }
-    else if(this.captureState == true){
-          // graphics.strokePoints(this.baseGeo);
-          graphics.lineStyle(3,0xE0CA3C);
-      }
     graphics.translate(this.x, this.y);
     graphics.rotate(this.forwardRot);
+    if(this.captureState == false){
+      graphics.fillStyle(0xA799B7, 1);
+      graphics.fillCircle(0, 0, this.radius);
+      graphics.fillStyle(0x40E0D0, 1);
+      graphics.fillCircle(70, 0, this.radius);
+      graphics.fillStyle(0xA799B7, 1);
+      // graphics.fillRect(5, 0 - this.radius, 5, this.radius +this.radius);
+      // graphics.lineStyle(2,0xA799B7);
+
+        // graphics.lineStyle(2,0xA799B7);
+        // graphics.scale(1.4,1.4);
+        // graphics.strokePoints(this.baseGeo);
+      }
+          else if(this.captureState == true){
+          // graphics.strokePoints(this.baseGeo);
+          // graphics.lineStyle(3,0xE0CA3C);
+          // graphics.lineStyle(2,0xA799B7);
+          // graphics.scale(1.4,1.4);
+          // graphics.strokePoints(this.baseGeo);
+          graphics.fillStyle(0xE0CA3C, 1);
+          graphics.fillCircle(0, 0, this.radius);
+          graphics.fillStyle(0x40E0D0, 1);
+          graphics.fillCircle(20, 0, this.radius);
+          graphics.lineStyle(5,0xE0CA3C);
+          graphics.strokePoints(this.newGeo);
+      }
+    // else if(this.captureState == true){
+    //       // graphics.strokePoints(this.baseGeo);
+    //       graphics.lineStyle(3,0xE0CA3C);
+    //   }
+    // graphics.translate(this.x, this.y);
+    // graphics.rotate(this.forwardRot);
     // graphics.strokePoints(this.baseGeo);
 
-    // render cannon
-    // graphics.fillCircle(0, 0, 12);
-    // if(this.captureState == false){
-    //   graphics.fillRect(0, 0, 20, 150);
-    //   }
-    //   else if(this.captureState == true){
-    //       graphics.strokePoints(this.baseGeo);
-    //   }
-    graphics.scale(1.4,1.4);
-    graphics.strokePoints(this.baseGeo);
     graphics.restore();
   }
 }

@@ -26,6 +26,8 @@ function onSerialMessage(msg) {
     player2Bend = parseInt(vals[3]);
     player1Rot = parseFloat(vals[4]);
     player2Rot = parseFloat(vals[5]);
+    player1Pos = player1Pos/1023 * (window.innerHeight -60);
+    player2Pos = player2Pos/1023 * (window.innerHeight -60);
 
 //   console.log(player1Pos);
 
@@ -111,22 +113,17 @@ class GameScreen extends Phaser.Scene {
 
 
 
-        this.pL1 = new Player((this.game.config.width / 4) -125, this.game.config.height / 2 -75);
-//      const pL2 = new Player((phaserConfig.width / 4 -100), phaserConfig.height / 3 - 125);
-// const pL3 = new Player((phaserConfig.width / 4 -100), phaserConfig.height * (2/3) -25);
-        this.pR1 = new Player2((this.game.config.width* .75) + 100, this.game.config.height / 2 -75);
-// const pR2 = new Player2((phaserConfig.width * .75 +100), phaserConfig.height / 3 -125);
-// const pR3 = new Player2((phaserConfig.width * .75 +100), phaserConfig.height * (2/3) -25);
-        this.b1 = new Ball(this.game.config.width / 2, this.game.config.height / 2, 11, Math.random()* (300+200) -200);
-
-        this.blocker1 = new Blocker1(this.game.config.width /2 - 50, this.game.config.height/2, 23, 50, 50, Math.random() > 0.5 ? 15 : -15);
-        this.blocker2 = new Blocker2(this.game.config.width /2 + 50, this.game.config.height/2, 23, 50, 50, Math.random() > 0.5 ? 15 : -15);
+        this.pL1 = new Player(((window.innerWidth / 4) -(.1 *window.innerWidth)), window.innerHeight / 2 -75);
+        this.pR1 = new Player2((window.innerWidth * .75) + (.1 *window.innerWidth), window.innerHeight / 2 -75);
+        this.b1 = new Ball(window.innerWidth  / 2, window.innerHeight / 2, .011* window.innerWidth, Math.random()* (300+200) -200);
+        this.blocker1 = new Blocker1(window.innerWidth /2 - (.1 *window.innerWidth) , window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
+        this.blocker2 = new Blocker2(window.innerWidth /2 + (.1 *window.innerWidth), window.innerHeight/2, 23, .05 * window.innerWidth, .05 * window.innerWidth, Math.random() > 0.5 ? 15 : -15);
 
         //old speed generator Math.random() *(20+10) -10
         //variable for soundplay
         this.leftSoundPlayed= false;
         this.rightSoundPlayed= false;
-        this.sound.play('Theme1', { volume: 0.25, loop: true });
+        this.sound.play('Theme1', { volume: 0.3 , loop: true });
 
         // Screen Shake
         this.isShaking = false;
@@ -182,15 +179,17 @@ class GameScreen extends Phaser.Scene {
         this.pR1.update(deltaTime, this.keys, player2Bend, player2Pos, player2Rot);
   // pR2.update(deltaTime, keys);
   // pR3.update(deltaTime, keys);
-
+  this.blocker1.update(deltaTime,this.player1Score,this.player2Score);
+  this.blocker2.update(deltaTime,this.player1Score,this.player2Score);
 //update score
         document.getElementById('score1').textContent = 'Score: ' + this.player1Score;
         document.getElementById('score2').textContent = 'Score: ' + this.player2Score;
   
 // Keep player on screen
-        if (this.b1.x > this.game.config.width + 5) {
+        if (this.b1.x > window.innerWidth + 5) {
             this.b1.hitSide();
-            this.sound.play('ScoreSound', { volume: 0.5});
+            this.sound.play('ScoreSound', { volume: 0.3});
+            this.startScreenShake(7, 500, 75);
             this.player1Score++;
             this.blocker1.blockerResetSpeed();
             this.blocker2.blockerResetSpeed();
@@ -199,7 +198,8 @@ class GameScreen extends Phaser.Scene {
 
         if (this.b1.x < -5) {
             this.b1.hitSide();
-            this.sound.play('ScoreSound', { volume: 0.5});
+            this.sound.play('ScoreSound', { volume: 0.3});
+            this.startScreenShake(7, 500, 75);
             this.player2Score++;
             this.blocker1.blockerResetSpeed();
             this.blocker2.blockerResetSpeed();

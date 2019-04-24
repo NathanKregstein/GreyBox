@@ -6,10 +6,10 @@ class Ball {
       this.forward = f;
       this.forwardX = Math.cos(this.forward);
       this.forwardY = Math.sin(this.forward);
-      this.moveSpeed = 400;
+      this.moveSpeed = .300 * window.innerWidth;
       this.isCaught = false;
       this.hitTop  =false;
-      this.capSpeed =1750;
+      this.capSpeed = .8 * window.innerWidth;
 
       this.originalColor = "0x000000";
       this.currentColor = "0x000000";
@@ -23,7 +23,7 @@ class Ball {
         this.forward = forward;
         this.isCaught = false;
         this.forwardX = Math.cos(this.forward);
-         this.forwardY = Math.sin(this.forward);
+        this.forwardY = Math.sin(this.forward);
          console.log(this.forward)
         //  this.forwardX = -this.forwardX;
         //  this.forwardY = -this.forwardY;
@@ -40,8 +40,8 @@ class Ball {
     }
 
     hitSide(){
-        this.x = 400;
-        this.y = 300;
+        this.x = .5 * window.innerWidth;
+        this.y = .5 *window.innerHeight;
         this.forward = Math.random();
         this.forward *= Math.PI;
         if(this.forward >= (Math.PI/2)){
@@ -52,7 +52,7 @@ class Ball {
         }
         this.forwardX = Math.cos(this.forward);
         this.forwardY = Math.sin(this.forward);
-        this.moveSpeed =400;
+        this.moveSpeed =.300 * window.innerWidth;
     }
     caught(x,y) {
         this.x=x;
@@ -98,7 +98,7 @@ class Ball {
       }
       draw(graphics) {
           graphics.save();
-          graphics.fillStyle(0x000000,1);
+          graphics.fillStyle(this.currentColor,1);
           graphics.translate(this.x, this.y);
           graphics.fillCircle(0, 0, this.radius);
           graphics.restore();

@@ -2,12 +2,13 @@
 #include "Wire.h"
 #include "SPI.h"
 
-//Create two instances of the driver class
-LIS3DH SensorOne( I2C_MODE, 0x18 );
-LIS3DH SensorTwo( I2C_MODE, 0x19 );
 
-const int Pot1Pin = A1;
-const int Pot2Pin = A0;
+//Create two instances of the driver class
+LIS3DH SensorTwo( I2C_MODE, 0x18 );
+LIS3DH SensorOne( I2C_MODE, 0x19 );
+
+const int Pot1Pin = A0;
+const int Pot2Pin = A1;
 
 int sensor1ZValue =0;
 int sensor2ZValue =0;
