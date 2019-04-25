@@ -87,6 +87,7 @@ class GameScreen extends Phaser.Scene {
     create() {
         // console.log("gameScreen");
         document.getElementById("game-score").style.display ='inline-block';
+        document.body.style.backgroundImage = "url('../Assets/Line.png')";
         SerialPortReader.addListener(this.onSerialMessage.bind(this));
         // console.log(player1Bend);
         this.ballState = false;
@@ -361,12 +362,12 @@ class GameScreen extends Phaser.Scene {
             this.leftSoundPlayed=false;
         }
 
-        if(this.player1Score >=10){
+        if(this.player1Score >=7){
             document.getElementById("game-score").style.display ='none';
             this.sound.sounds.find(s=> s.key == 'Theme1').destroy();
             this.scene.start('EndScreen1');
         }
-        if(this.player2Score >=10){
+        if(this.player2Score >=7){
             document.getElementById("game-score").style.display ='none';
             this.sound.sounds.find(s=> s.key == 'Theme1').destroy();
             this.scene.start('EndScreen2');
