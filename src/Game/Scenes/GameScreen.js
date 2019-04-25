@@ -76,6 +76,7 @@ class GameScreen extends Phaser.Scene {
       this.load.audio('CatchSound',['../Assets/CatchSound.wav']);
       this.load.audio('Theme1',['../Assets/Theme1.wav']);
       this.load.audio('ScoreSound',['../Assets/ScoreSound.wav']);
+      this.load.audio('HoldTick',['../Assets/HoldTick.wav']);
       // this.load.audio('WinSound',['../Assets/WinSound1.mp3']);
 
       // Theme song from https://freesound.org/people/tyops/sounds/237127/
@@ -171,7 +172,9 @@ class GameScreen extends Phaser.Scene {
     
         }
       }
-
+      playtick(){
+        this.sound.play('HoldTick');
+      }
     update(totalTime, deltaTime) {
       if(this.gamevars){
         const vals = this.gamevars.split(':');
@@ -187,9 +190,9 @@ class GameScreen extends Phaser.Scene {
   // Update Player
         this.updateScreenShake(deltaTime);
 
-        this.pL1.update(deltaTime, this.keys, player1Bend, player1Pos, player1Rot);
+        this.pL1.update(deltaTime, this.keys, player1Bend, player1Pos, player1Rot, this.sound);
 
-        this.pR1.update(deltaTime, this.keys, player2Bend, player2Pos, player2Rot);
+        this.pR1.update(deltaTime, this.keys, player2Bend, player2Pos, player2Rot, this.sound);
         this.b1.update(deltaTime, this.ballState, this.pL1.y,this.pR1.y);
   this.blocker1.update(deltaTime,this.player1Score,this.player2Score);
   this.blocker2.update(deltaTime,this.player1Score,this.player2Score);
@@ -338,7 +341,7 @@ class GameScreen extends Phaser.Scene {
 
         if(this.rightCaught ==true && !this.pR1.giveState()){
             this.rightCaught =false;
-            this.b1.free(this.b1.x,this.b1.y,this.pR1.forwardRot-3.13);
+            this.b1.free(this.b1.x,this.b1.y,this.pR1.forwardRot-3.13, this.sound);
             this.rightSoundPlayed=false;
         }
         if(isCircleCollision(this.b1,this.pL1) && this.pL1.giveState()){
@@ -354,7 +357,7 @@ class GameScreen extends Phaser.Scene {
 
         if(this.leftCaught ==true && !this.pL1.giveState()){
             this.leftCaught =false;
-            this.b1.free(this.b1.x,this.b1.y,this.pL1.forwardRot);
+            this.b1.free(this.b1.x,this.b1.y,this.pL1.forwardRot, this.sound);
             this.leftSoundPlayed=false;
         }
 

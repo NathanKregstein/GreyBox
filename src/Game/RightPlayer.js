@@ -12,11 +12,13 @@ class RightPlayer {
     this.rotSpeed = 1;
     this.captureState = false;
     this.holdTime =5000;
-    this.resetTime =2000;
+    this.resetTime =750;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
     this.prevCaptureState =false;
+    this.hasTicked = false;
+    this.hasReleased = false;
 
 
     // Geometry used for rendering
@@ -59,7 +61,7 @@ class RightPlayer {
     this.y = newY;
   }
 
-  update(deltaTime, keys, player2Bend, player2Pos, player2Rot) {
+  update(deltaTime, keys, player2Bend, player2Pos, player2Rot, sound) {
     // Player Movement
     if(this.captureState ==true){
         // if (keys.left.isDown) {
@@ -99,11 +101,22 @@ class RightPlayer {
             this.captureHoldTimer = this.captureHoldTimer - deltaTime;
             this.SpaceDown =true;
             this.prevCaptureState =true;
+            if(this.captureHoldTimer <= 2000 && !this.hasTicked){
+              sound.play('HoldTick');
+              this.hasTicked = true;
+            }
+            // if(this.captureHoldTimer <= 100 && !this.hasReleased){
+            //   sound.play('CatchSound');
+            //   this.hasReleased =true;
+            // }
     }
     else{
         this.captureState = false;
         this.captureHoldTimer = this.holdTime;
         this.SpaceDown =false;
+        this.hasTicked =false;
+        this.hasReleased =false;
+
     }
 
     if(this.captureState && this.captureHoldTimer <=0){

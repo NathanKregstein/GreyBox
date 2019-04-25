@@ -17,7 +17,8 @@ class StartScreen extends Phaser.Scene {
     this.keys = {
       space: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     };
-    this.bothReady = false;
+    this.P1Ready = false;
+    this.P2Ready = false;
   }
 
   update() {
@@ -32,19 +33,21 @@ class StartScreen extends Phaser.Scene {
       this.player1Pos = this.player1Pos/1023 * (window.innerHeight * .8) + (window.innerHeight *.1);
       this.player2Pos = this.player2Pos/1023 * (window.innerHeight *.8) + (window.innerHeight *.1);
     }
-    if(this.bothReady == false){
-      if (this.player1Bend ==1) {
+    // if(this.P1Ready == false ){
+      if (this.player1Bend ==1 && this.P1Ready == false ) {
         document.getElementById("Player1ready").innerHTML= "Player 1 Ready!";
+        this.P1Ready = true;
       }
-      if (this.player2Bend ==1) {
+      if (this.player2Bend ==1 && this.P2Ready == false) {
         document.getElementById("Player2ready").innerHTML= "Player 2 Ready!";
+        this.P2Ready =true;
       }
-      if(this.player1Bend == 1 && this.player2Bend == 1 ){
-        this.bothReady =true;
-      }
-    }
-    if(this.bothReady == true){
-      document.getElementById("Player1ready").innerHTML= "Unbend to Start";
+      // if(this.player1Bend == 1 && this.player2Bend == 1 ){
+      //   this.bothReady =true;
+      // }
+    // }
+    if(this.P2Ready == true && this.P1Ready == true){
+      document.getElementById("Player1ready").innerHTML= "Unbend to Start!";
       document.getElementById("Player2ready").innerHTML= "";
 
       if(this.player1Bend == 0 && this.player2Bend == 0 ){

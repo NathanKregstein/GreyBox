@@ -12,12 +12,14 @@ class LeftPlayer {
     this.rotSpeed = 1;
     this.captureState = false;
     this.holdTime =5000;
-    this.resetTime =2000;
+    this.resetTime =750;
     this.captureHoldTimer =this.holdTime;
     this.holdResetTimer = this.resetTime;
     this.SpaceDown = false;
     this.prevCaptureState =false;
     this.temp = 0;
+    this.hasTicked =false;
+    this.hasReleased = false;
 
 
     // Geometry used for rendering
@@ -48,6 +50,11 @@ class LeftPlayer {
       // new Phaser.Geom.Point(-10,0),
     ];
   }
+  preload(){
+    this.load.audio('HoldTick',['Assets/HoldTick.wav']);
+  }
+
+
   giveState(){
     return this.captureState;
   }
@@ -59,7 +66,7 @@ class LeftPlayer {
     this.y = newY;
   }
 
-  update(deltaTime, keys, player1Bend , player1Pos, player1Rot) {
+  update(deltaTime, keys, player1Bend , player1Pos, player1Rot, sound) {
     // Player Movement
     if(this.captureState == true){
       // if (keys.a.isDown) {
@@ -105,11 +112,23 @@ class LeftPlayer {
       this.captureHoldTimer = this.captureHoldTimer - deltaTime;
       this.SpaceDown =true;
       this.prevCaptureState =true;
+      if(this.captureHoldTimer <= 2000 && !this.hasTicked){
+        sound.play('HoldTick');
+        this.hasTicked = true;
+
+      }
+      // if(this.captureHoldTimer <= 100 && !this.hasReleased){
+      //   sound.play('CatchSound');
+      //   this.hasReleased =true;
+      // }
+      console.log(this.captureHoldTimer);
     }
     else{
       this.captureState = false;
       this.captureHoldTimer = this.holdTime;
       this.SpaceDown =false;
+      this.hasTicked = false;
+      this.hasReleased =false;
     }
     if(this.captureState && this.captureHoldTimer <=0){
       this.SpaceDown =false;

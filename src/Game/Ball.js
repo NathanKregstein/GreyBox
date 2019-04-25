@@ -26,7 +26,7 @@ class Ball {
       this.colorChange=false;
     }
     
-    free(x,y,forward){
+    free(x,y,forward, sound){
         this.x = x;
         this.y = y;
         this.forward = forward;
@@ -34,7 +34,8 @@ class Ball {
         this.isCaughtR = false;
         this.forwardX = Math.cos(this.forward);
         this.forwardY = Math.sin(this.forward);
-         console.log(this.forward)
+        sound.play('CatchSound');
+        //  console.log(this.forward)
         //  this.forwardX = -this.forwardX;
         //  this.forwardY = -this.forwardY;
     }
@@ -67,19 +68,19 @@ class Ball {
     caughtL(x,y) {
         this.x=x;
         this.y=y;
-        console.log("ball x value =")
-        console.log(this.x);
-        console.log("ball y value =")
-        console.log(this.y);
+        // console.log("ball x value =")
+        // console.log(this.x);
+        // console.log("ball y value =")
+        // console.log(this.y);
         this.isCaughtL = true;
       }
       caughtR(x,y) {
         this.x=x;
         this.y=y;
-        console.log("ball x value =")
-        console.log(this.x);
-        console.log("ball y value =")
-        console.log(this.y);
+        // console.log("ball x value =")
+        // console.log(this.x);
+        // console.log("ball y value =")
+        // console.log(this.y);
         this.isCaughtR = true;
       }
 
