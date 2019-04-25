@@ -80,6 +80,7 @@ class GameScreen extends Phaser.Scene {
       // this.load.audio('WinSound',['../Assets/WinSound1.mp3']);
 
       // Theme song from https://freesound.org/people/tyops/sounds/237127/
+      //  ticking sound from https://freesound.org/people/FoolBoyMedia/sounds/264498/
   }
     onSerialMessage(msg){
       this.gamevars = msg
